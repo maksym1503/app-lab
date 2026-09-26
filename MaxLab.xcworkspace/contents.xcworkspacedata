@@ -3,5 +3,4 @@
   <FileRef location="group:../gamify15/Gamefy.xcodeproj"></FileRef>
   <FileRef location="group:../reset/Reset.xcodeproj"></FileRef>
   <FileRef location="group:../maxlab/MaxLab.xcodeproj"></FileRef>
-  <FileRef location="group:../apple-app-foundation/Package.swift"></FileRef>
 </Workspace>

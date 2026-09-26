@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+LAB_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+python3 "$LAB_ROOT/scripts/validate_workspace.py"
+xcodebuild -workspace "$LAB_ROOT/MaxLab.xcworkspace" -list
+for scheme in Gamefy Reset MaxLab; do
+  xcodebuild -workspace "$LAB_ROOT/MaxLab.xcworkspace" -scheme "$scheme" \
+    -destination 'generic/platform=iOS Simulator' \
+    -derivedDataPath "$LAB_ROOT/.derivedData" CODE_SIGNING_ALLOWED=NO build-for-testing
+done
