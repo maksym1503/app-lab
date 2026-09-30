@@ -32,7 +32,7 @@ for reference in ET.parse(WORKSPACE / 'contents.xcworkspacedata').getroot():
         base = source_root if tree == 'SOURCE_ROOT' else parent
         path = base / obj.get('path', '')
         if obj['isa'] == 'PBXFileReference':
-            assert path.is_file(), f'Broken file reference: {path}'
+            assert (path.is_dir() if obj.get('lastKnownFileType') == 'folder.assetcatalog' else path.is_file()), f'Broken file reference: {path}'
             current = source_root
             for part in path.relative_to(source_root).parts:
                 assert part in {entry.name for entry in current.iterdir()}, f'Wrong path case: {path}'
@@ -54,5 +54,5 @@ for reference in ET.parse(WORKSPACE / 'contents.xcworkspacedata').getroot():
         assert target['isa'] == 'PBXNativeTarget'
         assert target['name'] == ref.attrib['BlueprintName']
     apps.add(app)
-assert apps == {'Gamefy', 'Reset', 'MaxLab'}, apps
+assert apps == {'Gamefy', 'Reset', 'MaxLab', 'PhotoVeil'}, apps
 print('Workspace file references, unique project IDs, package bindings and shared schemes are valid.')
